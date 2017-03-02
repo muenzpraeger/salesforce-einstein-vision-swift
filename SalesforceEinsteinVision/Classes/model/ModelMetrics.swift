@@ -1,0 +1,41 @@
+//
+//  ModelMetrics.swift
+//  predictivevision
+//
+//  Created by René Winkelmeyer on 02/28/2017.
+//  Copyright © 2016 René Winkelmeyer. All rights reserved.
+//
+
+import Foundation
+import SwiftyJSON
+
+public struct ModelMetrics {
+    
+    var f1: [Double]?
+    var testAccuracy: Double?
+    var trainingLoss: Double?
+    var confusionMatrix: [Int]?
+    var trainingAccuracy: String?
+    
+    init?() {
+    }
+    
+    init?(jsonObject: SwiftyJSON.JSON) {
+        f1 = [Double]()
+        let jsonF1 = jsonObject["f1"].array
+        for object in jsonF1! {
+            let value = object.double
+            f1?.append(value!)
+        }
+        testAccuracy = jsonObject["testAccuracy"].double
+        trainingLoss = jsonObject["trainingLoss"].double
+        confusionMatrix = [Int]()
+        let jsonConfusionMatrix = jsonObject["confusionMatrix"].array
+        for object in jsonConfusionMatrix! {
+            let value = object.int
+            confusionMatrix?.append(value!)
+        }
+        trainingAccuracy = jsonObject["trainingAccuracy"].string
+    }
+    
+}
