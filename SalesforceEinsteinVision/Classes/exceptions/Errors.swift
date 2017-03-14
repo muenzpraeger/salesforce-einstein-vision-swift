@@ -18,6 +18,10 @@ public enum ModelError: Error {
     case stringTooLong(field: String, maxValue: Int, currentValue: Int)
     case tooManyValues(field: String, maxValue: Int, currentValue: Int)
     case noValues(fields: String)
+    case fileDoesNotExist(fileName: String)
+    case fileNoZipFile(fileName: String)
+    case fileTooLarge(fileName: String)
+    case noUrl(url: String)
     
 }
 

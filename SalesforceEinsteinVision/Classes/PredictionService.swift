@@ -62,6 +62,122 @@ public class PredictionService {
         
     }
     
+    /// Creates a new Dataset based on a local zip file. A Dataset is basically a group of different object types (named as "Label").
+    ///
+    /// - Parameters:
+    ///   - fileName: The full filepath + name of the zip file
+    ///   - completion: Returns a Dataset object
+    public func createDatasetFromZipFileAsync(fileName: String, completion:@escaping (Dataset?) -> Void) -> Void {
+        do {
+            var multiPart = MultiPartDatasetZipFile()
+            try multiPart.build(fileName: fileName)
+            try HttpClient(service: self, url: DATASETS + "/upload", part: multiPart).execute { (success, result) in
+                if (success == false) {
+                    completion(nil)
+                    return
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    let dataset = Dataset(jsonObject: json)
+                    completion(dataset)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+        
+    }
+    
+    /// Creates a new Dataset based on a local zip file. A Dataset is basically a group of different object types (named as "Label").
+    ///
+    /// - Parameters:
+    ///   - fileName: The full filepath + name of the zip file
+    ///   - completion: Returns a Dataset object
+    public func createDatasetFromZipFileSync(fileName: String, completion:@escaping (Dataset?) -> Void) -> Void {
+        do {
+            var multiPart = MultiPartDatasetZipFile()
+            try multiPart.build(fileName: fileName)
+            try HttpClient(service: self, url: DATASETS + "/upload/sync", part: multiPart).execute { (success, result) in
+                if (success == false) {
+                    completion(nil)
+                    return
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    let dataset = Dataset(jsonObject: json)
+                    completion(dataset)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+        
+    }
+    
+    /// Creates a new Dataset based on a remote zip file. A Dataset is basically a group of different object types (named as "Label").
+    ///
+    /// - Parameters:
+    ///   - url: The remote url of the zip file.
+    ///   - completion: Returns a Dataset object
+    public func createDatasetFromUrlAsync(url: String, completion:@escaping (Dataset?) -> Void) -> Void {
+        do {
+            var multiPart = MultiPartDatasetUrl()
+            try multiPart.build(url: url)
+            try HttpClient(service: self, url: DATASETS + "/upload", part: multiPart).execute { (success, result) in
+                if (success == false) {
+                    completion(nil)
+                    return
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    let dataset = Dataset(jsonObject: json)
+                    completion(dataset)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+        
+    }
+    
+    /// Creates a new Dataset based on a remote zip file. A Dataset is basically a group of different object types (named as "Label").
+    ///
+    /// - Parameters:
+    ///   - url: The remote url of the zip file.
+    ///   - completion: Returns a Dataset object
+    public func createDatasetFromUrlSync(url: String, completion:@escaping (Dataset?) -> Void) -> Void {
+        do {
+            var multiPart = MultiPartDatasetUrl()
+            try multiPart.build(url: url)
+            try HttpClient(service: self, url: DATASETS + "/upload/sync", part: multiPart).execute { (success, result) in
+                if (success == false) {
+                    completion(nil)
+                    return
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    let dataset = Dataset(jsonObject: json)
+                    completion(dataset)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+        
+    }
+    
     /// Gets an existing Dataset.
     ///
     /// - Parameters:
@@ -224,6 +340,62 @@ public class PredictionService {
         }
     }
     
+    /// Adds new image examples for the vision training from a local zip file.
+    ///
+    /// - Parameters:
+    ///   - datasetId: The id of the Dataset to which the image should be added.
+    ///   - fileName: The local file path of the zip file.
+    ///   - completion: The Example object
+    public func createExampleFromZipFile(datasetId: Int, fileName: String, completion:@escaping (Example?) -> Void) -> Void {
+        do {
+            var multiPart = MultiPartDatasetZipFile()
+            try multiPart.build(fileName: fileName)
+            try HttpClient(service: self, url: DATASETS + "/" + String(datasetId) + "/upload", part: multiPart).execute { (success, result) in
+                if (!success) {
+                    completion(nil)
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    let example = Example(jsonObject: json)
+                    completion(example)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+    }
+    
+    /// Adds new image examples for the vision training from a remote zip file.
+    ///
+    /// - Parameters:
+    ///   - datasetId: The id of the Dataset to which the image should be added.
+    ///   - url: The remote url of the zip file.
+    ///   - completion: The Example object
+    public func createExample(datasetId: Int, url: String, completion:@escaping (Example?) -> Void) -> Void {
+        do {
+            var multiPart = MultiPartDatasetUrl()
+            try multiPart.build(url: url)
+            try HttpClient(service: self, url: DATASETS + "/" + String(datasetId) + "/upload", part: multiPart).execute { (success, result) in
+                if (!success) {
+                    completion(nil)
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    let example = Example(jsonObject: json)
+                    completion(example)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+    }
+    
     /// Gets data about an existing example.
     ///
     /// - Parameters:
@@ -313,10 +485,10 @@ public class PredictionService {
     ///   - epochs: Optional. The number of training iterations, valid values are between 1-100. Set to 0 if you want to use the default.
     ///   - learningRate: Optional. The learning rate, valid values are betweed 0.0001 and 0.01. Set to 0 if you want to use the default.
     ///   - completion: The trained Model
-    public func trainDataset(datasetId: Int, name: String, epochs: Int, learningRate: Double, completion:@escaping (Model?) -> Void) -> Void {
+    public func trainDataset(datasetId: Int, name: String, epochs: Int, learningRate: Double, trainParams: String, completion:@escaping (Model?) -> Void) -> Void {
         do {
             var multiPart = MultiPartTraining()
-            try multiPart.build(datasetId: datasetId, name: name, epochs: epochs, learningRate: learningRate)
+            try multiPart.build(datasetId: datasetId, name: name, epochs: epochs, learningRate: learningRate, trainParams: trainParams)
             try HttpClient(service: self, url: TRAIN, part: multiPart).execute { (success, result) in
                 if (!success) {
                     completion(nil)
