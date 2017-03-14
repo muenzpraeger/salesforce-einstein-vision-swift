@@ -13,6 +13,7 @@ public struct Example {
     
     var id: Int?
     var name: String?
+    var location: String?
     var createdAt: String?
     var label: Label?
     var object: String?
@@ -23,6 +24,7 @@ public struct Example {
     init?(jsonObject: SwiftyJSON.JSON) {
         id = jsonObject["id"].int
         name = jsonObject["name"].string
+        location = jsonObject["location"].string
         createdAt = jsonObject["createdAt"].string
         label = Label(jsonObject: jsonObject["label"])
         object = jsonObject["object"].string

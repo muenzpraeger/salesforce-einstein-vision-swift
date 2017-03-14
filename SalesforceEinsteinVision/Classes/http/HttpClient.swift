@@ -17,6 +17,7 @@ class HttpClient {
     
     var isDelete = false
     var isPost = false
+    var isPut = false
     var part: MultiPart?
     
     init(service: PredictionService, url: String) {
@@ -28,6 +29,9 @@ class HttpClient {
         self.service = service
         self.url = url
         self.part = part
+        if (url.hasSuffix("upload")) {
+            isPut = true
+        }
         isPost = true
     }
     
@@ -41,8 +45,12 @@ class HttpClient {
             "Cache-Control": "no-cache"
         ]
         
-        if (isPost) {
-            //let parts = self.part
+        if (isPost || isPut) {
+            var httpMethod = HTTPMethod.post
+            if (isPut) {
+                httpMethod = HTTPMethod.put
+            }
+            
             let parts = MultiPartDataset()
             headers.updateValue("Content-Type", forKey: "multipart/form-data")
             Alamofire.upload(
@@ -50,6 +58,7 @@ class HttpClient {
                     parts.form(multipart: multipartFormData)
                 },
                 to: url,
+                method: httpMethod,
                 headers: headers,
                 encodingCompletion: { encodingResult in
                     switch encodingResult {

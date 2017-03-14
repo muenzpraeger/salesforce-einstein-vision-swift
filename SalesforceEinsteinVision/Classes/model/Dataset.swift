@@ -11,10 +11,12 @@ import SwiftyJSON
 
 public struct Dataset {
     
+    public var available: Bool?
     public var id: Int?
     public var name: String?
     public var createdAt: String?
     public var updatedAt: String?
+    public var statusMsg: String?
     public var labelSummary: LabelSummary?
     public var totalExamples: Int?
     public var totalLabels: Int?
@@ -24,10 +26,12 @@ public struct Dataset {
     }
     
     init?(jsonObject: SwiftyJSON.JSON) {
+        available = jsonObject["available"].bool
         id = jsonObject["id"].int
         name = jsonObject["name"].string
         createdAt = jsonObject["createdAt"].string
         updatedAt = jsonObject["updatedAt"].string
+        statusMsg = jsonObject["statusMsg"].string
         labelSummary = LabelSummary(jsonObject: jsonObject["labelSummary"])
         totalExamples = jsonObject["totalExamples"].int
         totalLabels = jsonObject["totalLabels"].int
