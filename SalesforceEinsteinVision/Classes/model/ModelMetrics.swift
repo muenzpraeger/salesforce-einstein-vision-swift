@@ -11,11 +11,11 @@ import SwiftyJSON
 
 public struct ModelMetrics {
     
-    var f1: [Double]?
-    var testAccuracy: Double?
-    var trainingLoss: Double?
-    var confusionMatrix: [Int]?
-    var trainingAccuracy: String?
+    public var f1: [Double]?
+    public var testAccuracy: Double?
+    public var trainingLoss: Double?
+    public var confusionMatrix: [Int]?
+    public var trainingAccuracy: String?
     
     init?() {
     }
