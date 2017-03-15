@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-struct Probability {
+public struct Probability {
     
     public var label: String?
     public var probability: Float?
