@@ -11,8 +11,8 @@ import SwiftyJSON
 
 public struct PredictionResult {
     
-    var object: String?
-    var probabilities: [Probability]?
+    public var object: String?
+    public var probabilities: [Probability]?
     
     init?() {
     }

@@ -11,12 +11,12 @@ import SwiftyJSON
 
 public struct Example {
     
-    var id: Int?
-    var name: String?
-    var location: String?
-    var createdAt: String?
-    var label: Label?
-    var object: String?
+    public var id: Int?
+    public var name: String?
+    public var location: String?
+    public var createdAt: String?
+    public var label: Label?
+    public var object: String?
     
     init?() {
     }

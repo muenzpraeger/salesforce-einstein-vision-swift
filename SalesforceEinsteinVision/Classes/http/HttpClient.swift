@@ -51,11 +51,10 @@ class HttpClient {
                 httpMethod = HTTPMethod.put
             }
             
-            let parts = MultiPartDataset()
             headers.updateValue("Content-Type", forKey: "multipart/form-data")
             Alamofire.upload(
                 multipartFormData: { multipartFormData in
-                    parts.form(multipart: multipartFormData)
+                    self.part?.form(multipart: multipartFormData)
                 },
                 to: url,
                 method: httpMethod,
@@ -82,7 +81,6 @@ class HttpClient {
                                             data = json["data"].rawString()!
                                         default:
                                             data = request.result.value!
-                                            print(data)
                                         }
                                         isSuccess = true
                                     default:

@@ -11,8 +11,8 @@ import SwiftyJSON
 
 struct Probability {
     
-    var label: String?
-    var probability: Float?
+    public var label: String?
+    public var probability: Float?
     
     init?() {
     }

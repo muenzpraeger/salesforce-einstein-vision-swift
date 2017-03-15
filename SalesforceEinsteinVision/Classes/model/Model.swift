@@ -11,22 +11,22 @@ import SwiftyJSON
 
 public struct Model {
     
-    var datasetId: Int?
-    var datasetVersionId: Int?
-    var name: String?
-    var status: String?
-    var progress: Int?
-    var createdAt: String?
-    var updatedAt: String?
-    var learningRate: Double?
-    var epochs: Int?
-    var queuePosition: Int?
-    var object: String?
-    var modelId: String?
-    var modelType: String?
-    var failureMsg: String?
-    var trainParams: String?
-    var trainStats: String?
+    public var datasetId: Int?
+    public var datasetVersionId: Int?
+    public var name: String?
+    public var status: String?
+    public var progress: Int?
+    public var createdAt: String?
+    public var updatedAt: String?
+    public var learningRate: Double?
+    public var epochs: Int?
+    public var queuePosition: Int?
+    public var object: String?
+    public var modelId: String?
+    public var modelType: String?
+    public var failureMsg: String?
+    public var trainParams: String?
+    public var trainStats: String?
     
     init?() {
     }
