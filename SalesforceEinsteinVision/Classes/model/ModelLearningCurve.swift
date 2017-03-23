@@ -29,8 +29,8 @@ public struct ModelLearningCurve {
         metricsData = [ModelMetrics]()
         let jsonModelMetrics = jsonObject["metricsData"].array
         for object in jsonModelMetrics! {
-            let modelMetric = ModelMetrics(jsonObject: object)
-            metricsData?.append(modelMetric!)
+            let metric = ModelMetrics(jsonObject: object)
+            metricsData?.append(metric!)
         }
     }
     
