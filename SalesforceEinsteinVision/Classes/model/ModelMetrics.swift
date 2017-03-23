@@ -16,6 +16,7 @@ public struct ModelMetrics {
     public var trainingLoss: Double?
     public var confusionMatrix: [Int]?
     public var trainingAccuracy: String?
+    public var labels: [String]?
     
     init?() {
     }
@@ -34,6 +35,12 @@ public struct ModelMetrics {
         for object in jsonConfusionMatrix! {
             let value = object.int
             confusionMatrix?.append(value!)
+        }
+        labels = [String]()
+        let jsonLabels = jsonObject["labels"].array
+        for object in jsonLabels! {
+            let value = object.string
+            labels?.append(value!)
         }
         trainingAccuracy = jsonObject["trainingAccuracy"].string
     }

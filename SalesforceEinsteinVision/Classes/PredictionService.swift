@@ -531,7 +531,39 @@ public class PredictionService {
             print("Unknown error")
         }
     }
-    
+
+    /// Gets the learning curve of a Model.
+    ///
+    /// - Parameters:
+    ///   - modelMetricsId: The model id for which the learning curve should be fetched.
+    ///   - completion: The fetched Model learning curve
+    public func getModelLearningCurve(modelMetricsId: String, completion:@escaping ([ModelLearningCurve]?) -> Void) -> Void {
+        do {
+            try HttpClient(service: self, url: MODELS + "/" + modelMetricsId + "/lc").execute { (success, result) in
+                if (!success) {
+                    completion(nil)
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+
+                    var modelLearningCurves = [ModelLearningCurve]()
+
+                    for object in json.array! {
+                        let modelLearningCurve = ModelLearningCurve(jsonObject: object)
+                        modelLearningCurves.append(modelLearningCurve!)
+                    }
+
+                    completion(modelLearningCurves)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+    }
+
     /// Gets the metrics of a Model.
     ///
     /// - Parameters:

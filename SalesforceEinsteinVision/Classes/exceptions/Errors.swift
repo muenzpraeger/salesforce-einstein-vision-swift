@@ -11,10 +11,10 @@ import Foundation
 public enum ModelError: Error {
  
     case noFieldValue(field: String)
-    case intToBig(field: String, maxValue: Int, currentValue: Int)
-    case doubleToBig(field: String, maxValue: Double, currentValue: Double)
-    case intToSmall(field: String, minValue: Int, currentValue: Int)
-    case doubleToSmall(field: String, minValue: Double, currentValue: Double)
+    case intTooBig(field: String, maxValue: Int, currentValue: Int)
+    case doubleTooBig(field: String, maxValue: Double, currentValue: Double)
+    case intTooSmall(field: String, minValue: Int, currentValue: Int)
+    case doubleTooSmall(field: String, minValue: Double, currentValue: Double)
     case stringTooLong(field: String, maxValue: Int, currentValue: Int)
     case tooManyValues(field: String, maxValue: Int, currentValue: Int)
     case noValues(fields: String)
