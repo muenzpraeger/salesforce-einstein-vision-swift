@@ -36,7 +36,7 @@ public struct MultiPartTraining : MultiPart {
             throw ModelError.stringTooLong(field: "name", maxValue: MAX_NAME, currentValue: name.characters.count)
         }
         if (epochs>100) {
-            throw ModelError.intToBig(field: "epochs", maxValue: 100, currentValue: epochs)
+            throw ModelError.intTooBig(field: "epochs", maxValue: 100, currentValue: epochs)
         }
         
         var learningRateChecked = learningRate
@@ -44,9 +44,9 @@ public struct MultiPartTraining : MultiPart {
         if (learningRateChecked==0) {
             learningRateChecked = DEFAULT_LEARNING_RATE
         } else if (learningRateChecked<MIN_LEARNING_RATE) {
-            throw ModelError.doubleToSmall(field: "learningRate", minValue: MIN_LEARNING_RATE, currentValue: learningRateChecked)
+            throw ModelError.doubleTooSmall(field: "learningRate", minValue: MIN_LEARNING_RATE, currentValue: learningRateChecked)
         } else if (learningRateChecked>MAX_LEARNING_RATE) {
-            throw ModelError.doubleToBig(field: "learningRate", maxValue: MAX_LEARNING_RATE, currentValue: learningRateChecked)
+            throw ModelError.doubleTooBig(field: "learningRate", maxValue: MAX_LEARNING_RATE, currentValue: learningRateChecked)
         }
         
         _datasetId = datasetId

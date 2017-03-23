@@ -28,7 +28,7 @@ public struct MultiPartExample : MultiPart {
             throw ModelError.stringTooLong(field: "name", maxValue: MAX_NAME, currentValue: name.characters.count)
         }
         if (labelId<0) {
-            throw ModelError.intToSmall(field: "labelId", minValue: 0, currentValue: labelId)
+            throw ModelError.intTooSmall(field: "labelId", minValue: 0, currentValue: labelId)
         }
         if file.absoluteString.isEmpty {
             throw ModelError.noFieldValue(field: "file")
