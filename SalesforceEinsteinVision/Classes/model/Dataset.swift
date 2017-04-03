@@ -21,6 +21,7 @@ public struct Dataset {
     public var totalExamples: Int?
     public var totalLabels: Int?
     public var object: String?
+    public var type: String?
 
     init?() {
     }
@@ -36,6 +37,7 @@ public struct Dataset {
         totalExamples = jsonObject["totalExamples"].int
         totalLabels = jsonObject["totalLabels"].int
         object = jsonObject["object"].string
+        type = jsonObject["type"].string
     }
     
 }
