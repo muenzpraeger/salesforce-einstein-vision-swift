@@ -9,7 +9,7 @@ public class PredictionService {
     private let LABELS = "/labels"
     private var EXAMPLES: String = "/examples"
     private let TRAIN: String = "/vision/train"
-    private let MODELS: String = "/models"
+    private var MODELS: String
     private var PREDICT: String
     private var API_USAGE: String
     
@@ -30,6 +30,7 @@ public class PredictionService {
         API_USAGE = BASE_URL + "/apiusage"
         DATASETS = BASE_URL + "/vision/datasets"
         PREDICT = BASE_URL + "/vision/predict"
+        MODELS = BASE_URL + "/vision/models"
     }
     
     // MARK: Datasets
@@ -598,7 +599,7 @@ public class PredictionService {
     ///   - completion: An array of Models
     public func getModels(datasetId: Int, completion:@escaping ([Model]?) -> Void) -> Void {
         do {
-            try HttpClient(service: self, url: DATASETS + "/" + String(datasetId) + "/" + MODELS).execute { (success, result) in
+            try HttpClient(service: self, url: DATASETS + "/" + String(datasetId) + "/models").execute { (success, result) in
                 if (!success) {
                     completion(nil)
                 }

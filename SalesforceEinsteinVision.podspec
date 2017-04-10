@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SalesforceEinsteinVision'
-  s.version          = '1.3.0'
+  s.version          = '1.3.1'
   s.summary          = 'Swift wrapper for Salesforce Einstein Vision'
 
   s.description      = <<-DESC
