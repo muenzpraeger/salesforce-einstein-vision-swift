@@ -4,13 +4,14 @@ import Alamofire
 
 public class PredictionService {
     
-    private let BASE_URL = "https://api.metamind.io/v1/vision"
+    private let BASE_URL = "https://api.metamind.io/v1"
     private var DATASETS: String
     private let LABELS = "/labels"
     private var EXAMPLES: String = "/examples"
-    private let TRAIN: String = "/train"
+    private let TRAIN: String = "/vision/train"
     private let MODELS: String = "/models"
     private var PREDICT: String
+    private var API_USAGE: String
     
     var bearerToken = ""
     
@@ -26,8 +27,9 @@ public class PredictionService {
             return nil
         }
         self.bearerToken = bearerToken
-        DATASETS = BASE_URL + "/datasets"
-        PREDICT = BASE_URL + "/predict"
+        API_USAGE = BASE_URL + "/apiusage"
+        DATASETS = BASE_URL + "/vision/datasets"
+        PREDICT = BASE_URL + "/vision/predict"
     }
     
     // MARK: Datasets
@@ -700,6 +702,39 @@ public class PredictionService {
                     let json = JSON(data: dataFromString)
                     let predictionResult = PredictionResult(jsonObject: json)
                     completion(predictionResult)
+                }
+            }
+        } catch GeneralError.failureReason(let message){
+            print(message)
+        } catch {
+            print("Unknown error")
+        }
+    }
+
+
+    // MARK: API Usage
+
+    /// Returns the API usage for the Einstein Vision service
+    ///
+    /// - Parameters:
+    ///   - completion: The PredictionResult for this prediction.
+    public func getApiUsage(completion:@escaping ([ApiUsage]?) -> Void) -> Void {
+        do {
+            try HttpClient(service: self, url: API_USAGE).execute { (success, result) in
+                if (!success) {
+                    completion(nil)
+                }
+                
+                if let dataFromString = result.data(using: .utf8, allowLossyConversion: false) {
+                    let json = JSON(data: dataFromString)
+                    
+                    var apiUsages = [ApiUsage]()
+                    
+                    for object in json.array! {
+                        let apiUsage = ApiUsage(jsonObject: object)
+                        apiUsages.append(apiUsage!)
+                    }
+                    completion(apiUsages)
                 }
             }
         } catch GeneralError.failureReason(let message){
