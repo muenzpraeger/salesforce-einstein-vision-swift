@@ -32,7 +32,7 @@ public struct MultiPartPrediction : MultiPart {
         if let sampleId = sampleId, !sampleId.isEmpty {
             _sampleId = sampleId
         } else {
-            _sampleId = ''
+            _sampleId = ""
         }
         
         _sampleId = sampleId
