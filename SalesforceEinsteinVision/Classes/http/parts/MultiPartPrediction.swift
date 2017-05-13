@@ -28,6 +28,13 @@ public struct MultiPartPrediction : MultiPart {
 
         _modelId = modelId
         _data = data
+        
+        if let sampleId = sampleId, !sampleId.isEmpty {
+            _sampleId = sampleId
+        } else {
+            _sampleId = ''
+        }
+        
         _sampleId = sampleId
         _sourceType = type
        

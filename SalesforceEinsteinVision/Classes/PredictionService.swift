@@ -635,7 +635,7 @@ public class PredictionService {
     public func predictBase64(modelId: String, base64: String, sampleId: String?, completion:@escaping (PredictionResult?) -> Void) -> Void {
         do {
             var multiPart = MultiPartPrediction()
-            try multiPart.build(modelId: modelId, data: base64, sampleId: sampleId!, type: SourceType.base64)
+            try multiPart.build(modelId: modelId, data: base64, sampleId: sampleId, type: SourceType.base64)
             try HttpClient(service: self, url: PREDICT, part: multiPart).execute { (success, result) in
                 if (!success) {
                     completion(nil)
@@ -664,7 +664,7 @@ public class PredictionService {
     public func predictFile(modelId: String, filePath: String, sampleId: String?, completion:@escaping (PredictionResult?) -> Void) -> Void {
         do {
             var multiPart = MultiPartPrediction()
-            try multiPart.build(modelId: modelId, data: filePath, sampleId: sampleId!, type: SourceType.file)
+            try multiPart.build(modelId: modelId, data: filePath, sampleId: sampleId, type: SourceType.file)
             try HttpClient(service: self, url: PREDICT, part: multiPart).execute { (success, result) in
                 if (!success) {
                     completion(nil)
@@ -693,7 +693,7 @@ public class PredictionService {
     public func predictUrl(modelId: String, url: String, sampleId: String?, completion:@escaping (PredictionResult?) -> Void) -> Void {
         do {
             var multiPart = MultiPartPrediction()
-            try multiPart.build(modelId: modelId, data: url, sampleId: sampleId!, type: SourceType.url)
+            try multiPart.build(modelId: modelId, data: url, sampleId: sampleId, type: SourceType.url)
             try HttpClient(service: self, url: PREDICT, part: multiPart).execute { (success, result) in
                 if (!success) {
                     completion(nil)
