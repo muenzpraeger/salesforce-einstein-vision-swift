@@ -31,11 +31,8 @@ public struct MultiPartPrediction : MultiPart {
         
         if let sampleId = sampleId, !sampleId.isEmpty {
             _sampleId = sampleId
-        } else {
-            _sampleId = ""
-        }
-        
-        _sampleId = sampleId
+        } 
+    
         _sourceType = type
        
     }
@@ -45,9 +42,9 @@ public struct MultiPartPrediction : MultiPart {
         let modelId = _modelId?.data(using: String.Encoding.utf8)
         multipart.append(modelId!, withName: "modelId")
         
-        if (!(_sampleId?.isEmpty)!) {
-            let sampleId = _sampleId?.data(using: String.Encoding.utf8)
-            multipart.append(sampleId!, withName: "sampleId")
+        if let id = _sampleId, !id.isEmpty {
+            let sampleId = id.data(using: String.Encoding.utf8)!
+            multipart.append(sampleId, withName: "sampleId")
         }
         
         switch(_sourceType!) {
